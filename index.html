@@ -3,83 +3,54 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Legends of Love: Valentine's Day 💘</title>
+  <title>Legends of Love: Extreme Edition 💘</title>
   <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body { margin: 0; background: #000; color: #fff; font-family: 'Courier New', monospace; display: flex; justify-content: center; height: 100vh; overflow: hidden; touch-action: none; -webkit-user-select: none; user-select: none; }
-    
     #app-container { display: flex; flex-direction: column; width: 100vw; height: 100vh; background: #111; max-width: 600px; }
 
-    /* SCREEN AREA */
     #screen-container { flex: 2.5; width: 100%; background: #000; position: relative; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box; }
     #frame { width: 100%; height: 100%; border: 4px solid #669de6; border-radius: 8px; box-shadow: 0 0 20px rgba(102, 157, 230, 0.4); overflow: hidden; position: relative; background: #000; }
     canvas { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
 
-    /* MOBILE CONTROLS */
     #controls-container { flex: 1.2; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; background: #1a1a1a; border-top: 2px solid #333; }
     .dpad { position: relative; width: 140px; height: 140px; }
     .btn { background: #333; border: 2px solid #555; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #fff; position: absolute; width: 46px; height: 46px; box-shadow: 0 4px #000; }
     .btn.active { background: #ff4d4d; border-color: #fff; transform: translateY(2px); box-shadow: 0 1px #000; }
-    #btn-up { top: 0; left: 47px; opacity: 0.3; } 
-    #btn-down { bottom: 0; left: 47px; } 
-    #btn-left { left: 0; top: 47px; } 
-    #btn-right { right: 0; top: 47px; }
+    #btn-down { bottom: 0; left: 47px; } #btn-left { left: 0; top: 47px; } #btn-right { right: 0; top: 47px; }
 
     .action-group { display: flex; gap: 15px; }
     .action-btn { width: 75px; height: 75px; border-radius: 50%; background: #333; border: 4px solid #555; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #fff; box-shadow: 0 5px #000; }
-    .action-btn.active { transform: scale(0.9); box-shadow: 0 2px #000; }
-    #btn-a { border-color: #00ffff; } 
-    #btn-b { border-color: #ff4d4d; } 
-    #btn-a.active { background: #00ffff; color: #000; }
-    #btn-b.active { background: #ff4d4d; color: #000; }
+    .action-btn.active { transform: scale(0.9); box-shadow: 0 2px #000; background: #ff4d4d; color: #fff; }
 
-    /* MODAL & SCALED PHOTOS */
     .overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.9); z-index: 100; }
     .modal { background: #111; color: #fff; padding: 20px; border: 4px solid #ffd700; text-align: center; width: 85%; border-radius: 15px; max-height: 85vh; overflow-y: auto; }
-    
-    /* THE FIX: Constraints for the Reward Images */
-    .modal img { 
-        max-width: 250px; 
-        max-height: 250px; 
-        width: auto; 
-        height: auto; 
-        border: 3px solid #fff; 
-        margin: 15px auto; 
-        display: block; 
-        border-radius: 10px; 
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    }
-    
-    .caption { font-size: 14px; line-height: 1.4; margin: 10px 0; color: #ccc; }
-
+    .modal img { max-width: 250px; max-height: 250px; width: auto; height: auto; border: 3px solid #fff; margin: 15px auto; display: block; border-radius: 10px; }
     button { padding: 15px 30px; background: #ff4d4d; color: #fff; border: 2px solid #fff; font-weight: bold; border-radius: 8px; cursor: pointer; text-transform: uppercase; font-family: inherit; }
-    input { width: 90%; padding: 12px; margin: 10px 0; background: #000; color: #fff; border: 2px solid #ffd700; text-align: center; font-size: 18px; border-radius: 8px; font-family: inherit; }
+    input { width: 90%; padding: 12px; margin: 10px 0; background: #000; color: #fff; border: 2px solid #ffd700; text-align: center; font-size: 18px; border-radius: 8px; }
   </style>
 </head>
 <body oncontextmenu="return false;">
 
 <div id="app-container">
     <div id="screen-container">
-        <div id="frame">
-            <canvas id="game" width="800" height="450"></canvas>
-        </div>
+        <div id="frame"><canvas id="game" width="800" height="450"></canvas></div>
     </div>
     <div id="controls-container">
         <div class="dpad">
-            <div class="btn" id="btn-up">▲</div>
             <div class="btn" id="btn-down">▼</div>
             <div class="btn" id="btn-left">◀</div>
             <div class="btn" id="btn-right">▶</div>
         </div>
         <div class="action-group">
-            <div class="action-btn" id="btn-b">B</div> 
-            <div class="action-btn" id="btn-a">A</div> 
+            <div class="action-btn" id="btn-b">ATK</div> 
+            <div class="action-btn" id="btn-a">JMP</div> 
         </div>
     </div>
     <div class="overlay" id="modal">
         <div class="modal" id="modal-content">
             <h1 style="color:#ffd700">LEGENDS OF LOVE</h1>
-            <p>Rescue your family, Jesse!</p>
+            <p>The Dragon is angry. Rescue your family!</p>
             <button onclick="startStory()">START QUEST</button>
         </div>
     </div>
@@ -90,28 +61,29 @@ const canvas = document.getElementById("game"), ctx = canvas.getContext("2d");
 const W = 800, H = 450, GROUND_Y = 415;
 let state = "TITLE", level = 0, heartsCollected = 0, introTimer = 0, gateOpen = false;
 let storyTimer = 0, victoryTimer = 0;
-
 const keys = { l:0, r:0, d:0, x:0, space:0 };
+let projectiles = [];
+
+// --- AUDIO ---
 const AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let musicLoop = null;
-
-function playNote(freq, dur, vol = 0.05, type="square") {
+function playNote(freq, dur, vol = 0.05) {
     if(AudioCtx.state === 'suspended') AudioCtx.resume();
     const osc = AudioCtx.createOscillator(), gain = AudioCtx.createGain();
-    osc.type = type; osc.frequency.setValueAtTime(freq, AudioCtx.currentTime);
+    osc.type = "square"; osc.frequency.setValueAtTime(freq, AudioCtx.currentTime);
     gain.gain.setValueAtTime(vol, AudioCtx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.0001, AudioCtx.currentTime + dur);
     osc.connect(gain); gain.connect(AudioCtx.destination);
     osc.start(); osc.stop(AudioCtx.currentTime + dur);
 }
-
-const levelSongs = [[261,329,392,523], [440,349,330,261], [523,659,783,1046], [196,220,246,261], [130,146,130,98]];
 function startMusic() {
     if(musicLoop) clearInterval(musicLoop);
-    let step = 0; const song = levelSongs[level];
-    musicLoop = setInterval(() => { if(state === "PLAY") { playNote(song[step % song.length], 0.2, 0.02); step++; } }, 200);
+    musicLoop = setInterval(() => { 
+        if(state === "PLAY") playNote([261, 329, 392, 523][Math.floor(Date.now()/200)%4], 0.2, 0.02);
+    }, 200);
 }
 
+// --- ASSETS ---
 const IMG = {};
 function load(name, fn) { IMG[name] = new Image(); IMG[name].src = fn; IMG[name].onload = () => { IMG[name].ok = true; }; }
 load('bg1','assets/bg1.png'); load('bg2','assets/bg2.png'); load('bg3','assets/bg3.png'); load('bg4','assets/bg4.png'); load('bg5','assets/bg5.png');
@@ -120,53 +92,39 @@ load('partner','assets/partner.png'); load('dragon1','assets/dragon_1.png'); loa
 load('slime','assets/slime.png'); load('crystal','assets/crystal.png'); load('tile','assets/tiles/tileset.png'); 
 for(let i=1;i<=5;i++) load('p'+i, `assets/photos/photo${i}.jpg`);
 
-function setupControls() {
-    const bindTouch = (id, key) => {
-        const el = document.getElementById(id);
-        el.addEventListener('touchstart', (e) => { e.preventDefault(); keys[key] = 1; el.classList.add('active'); }, {passive: false});
-        el.addEventListener('touchend', (e) => { e.preventDefault(); keys[key] = 0; el.classList.remove('active'); }, {passive: false});
-    };
-    bindTouch('btn-left', 'l'); bindTouch('btn-right', 'r'); bindTouch('btn-down', 'd');
-    bindTouch('btn-b', 'x'); bindTouch('btn-a', 'space');
-
-    window.addEventListener('keydown', e => {
-        const k = e.key.toLowerCase();
-        if(k === "arrowleft") keys.l = 1; if(k === "arrowright") keys.r = 1;
-        if(k === "arrowdown") keys.d = 1; if(k === " " || k === "arrowup") keys.space = 1;
-        if(k === "z" || k === "x") keys.x = 1;
-    });
-    window.addEventListener('keyup', e => {
-        const k = e.key.toLowerCase();
-        if(k === "arrowleft") keys.l = 0; if(k === "arrowright") keys.r = 0;
-        if(k === "arrowdown") keys.d = 0; if(k === " " || k === "arrowup") keys.space = 0;
-        if(k === "z" || k === "x") keys.x = 0;
-    });
+// --- INPUTS ---
+function bind(id, key) {
+    const el = document.getElementById(id);
+    el.addEventListener('touchstart', (e) => { e.preventDefault(); keys[key] = 1; el.classList.add('active'); }, {passive: false});
+    el.addEventListener('touchend', (e) => { e.preventDefault(); keys[key] = 0; el.classList.remove('active'); }, {passive: false});
 }
-setupControls();
+bind('btn-left', 'l'); bind('btn-right', 'r'); bind('btn-down', 'd'); bind('btn-b', 'x'); bind('btn-a', 'space');
 
+// --- GAME LOGIC ---
 const chapters = [
-    { name: "THE SEARCH", platforms: [{x:200, y:300, w:200, h:25}, {x:475, y:225, w:200, h:25}], quiz: "Who are you fighting for?", ans: ["izzy", "isabelle"], cap: "Every legend begins with knowing who you're fighting for." },
-    { name: "THE PROMISE", platforms: [{x:75, y:325, w:150, h:25}, {x:275, y:250, w:150, h:25}, {x:475, y:175, w:150, h:25}], quiz: "Where did we get engaged?", ans: ["bull head", "bullhead"], cap: "Some places become legendary because of who stood there." },
-    { name: "THE LEGACY", platforms: [{x:50, y:300, w:100, h:25}, {x:600, y:300, w:100, h:25}, {x:325, y:200, w:125, h:25}], quiz: "What is our daughter's name?", ans: ["stella"], cap: "From love, a universe was born." },
-    { name: "THE CHOICE", platforms: [{x:50, y:350, w:75, h:25}, {x:200, y:275, w:75, h:25}, {x:400, y:200, w:75, h:25}, {x:600, y:125, w:75, h:25}], quiz: "Why do I choose you?", ans: ["ANYTHING"], cap: "Love was never trapped it was waiting." },
-    { name: "THE KINGDOM", platforms: [{x:50, y:275, w:200, h:25}, {x:550, y:275, w:200, h:25}], quiz: "Will you be my Valentine?", ans: ["yes", "i do"], cap: "" }
+    { name: "THE SEARCH", platforms: [{x:200, y:300, w:200}, {x:475, y:225, w:200}], quiz: "Fighting for?", ans: ["izzy", "isabelle"] },
+    { name: "THE PROMISE", platforms: [{x:100, y:325, w:150}, {x:400, y:200, w:150}], quiz: "Engaged where?", ans: ["bull head", "bullhead"] },
+    { name: "THE LEGACY", platforms: [{x:50, y:300, w:100}, {x:600, y:300, w:100}, {x:325, y:180, w:125}], quiz: "Daughter?", ans: ["stella"] },
+    { name: "THE CHOICE", platforms: [{x:50, y:350, w:75}, {x:200, y:275, w:75}, {x:400, y:200, w:75}, {x:600, y:125, w:75}], quiz: "Choice?", ans: ["anything"] },
+    { name: "THE KINGDOM", platforms: [{x:50, y:275, w:200}, {x:550, y:275, w:200}], quiz: "Valentine?", ans: ["yes", "i do"] }
 ];
 
 let hero = { x:50, y:250, w:100, h:150, vx:0, vy:0, hp:5, iframes:0, grounded:false, attacking:false, atkTimer:0, faceRight: true, crouching: false };
-let boss = { x:600, y:250, w:150, h:140, hp:20, maxHP:20, alive:true, flash:0, state: "HOVER", timer: 0, startY: 175, frame:1, frameTimer:0 };
-let gate = { x: W-125, y: GROUND_Y-225, w: 100, h: 100 };
+let boss = { x:600, y:250, w:150, h:140, hp:20, maxHP:20, alive:true, flash:0, fireTimer: 0 };
+let gate = { x: W-125, y: GROUND_Y-150, w: 100, h: 100 };
 let platforms = [], crystals = [];
 let storyDragon = { x: 250, y: -200, w: 250, h: 200 }, storyPartner = { x: 250, y: GROUND_Y-112, w: 75, h: 112 }; 
 
+function startStory() { document.getElementById('modal').style.display='none'; state = "STORY"; storyTimer = 0; }
+
 function initLevel() {
     const c = chapters[level];
-    hero.x = 50; hero.y = GROUND_Y - 150; hero.vx = 0; hero.vy = 0; hero.hp = 5; hero.h = 150;
-    boss.alive = true; boss.hp = (level === 4) ? 60 : (15 + level * 10); boss.maxHP = boss.hp;
-    boss.x = 600; boss.y = GROUND_Y - boss.h; boss.state = "HOVER"; boss.startY = 175;
-    platforms = [{ x:0, y:GROUND_Y, w:W, h:50 }, ...c.platforms];
-    crystals = []; heartsCollected = 0; gateOpen = false;
+    hero.x = 50; hero.y = GROUND_Y - 150; hero.hp = 5;
+    boss.alive = true; boss.hp = 20 + (level * 15); boss.maxHP = boss.hp; boss.x = 600; boss.fireTimer = 0;
+    platforms = [{ x:0, y:GROUND_Y, w:W, h:50 }];
+    c.platforms.forEach(p => platforms.push({x:p.x, y:p.y, w:p.w, h:25}));
+    crystals = []; projectiles = []; heartsCollected = 0; gateOpen = false;
     c.platforms.forEach(p => crystals.push({ x: p.x + (p.w/2) - 25, y: p.y - 60, got: false }));
-    crystals.push({ x: W/2 - 25, y: GROUND_Y - 60, got: false });
     state = "PLAY"; startMusic();
 }
 
@@ -174,147 +132,117 @@ function resolveCollision(e, r) {
     if (e.x < r.x + r.w && e.x + e.w > r.x && e.y < r.y + r.h && e.y + e.h > r.y) {
         let ox = (e.w + r.w) / 2 - Math.abs((e.x + e.w / 2) - (r.x + r.w / 2));
         let oy = (e.h + r.h) / 2 - Math.abs((e.y + e.h / 2) - (r.y + r.h / 2));
-        if (ox < oy) { if (e.x < r.x) e.x = r.x - e.w; else e.x = r.x + r.w; e.vx = 0; }
+        if (ox < oy) { if (e.x < r.x) e.x = r.x - e.w; else e.x = r.x + r.w; }
         else { if (e.y < r.y) { e.y = r.y - e.h; e.vy = 0; e.grounded = true; } else { e.y = r.y + r.h; e.vy = 0; } }
     }
 }
 
-function startStory() { 
-    if(AudioCtx.state==='suspended') AudioCtx.resume();
-    document.getElementById('modal').style.display='none'; 
-    state = "STORY"; storyTimer = 0; hero.x = 100; hero.y = GROUND_Y - 150; storyPartner.x = 225; storyPartner.y = GROUND_Y - 112; storyDragon.x = 225; storyDragon.y = -250; 
-}
-
 function update() {
-    if(state === "INTRO") { if(--introTimer <= 0) initLevel(); return; }
-    boss.frameTimer++; if(boss.frameTimer > 15) { boss.frame = (boss.frame === 1) ? 2 : 1; boss.frameTimer = 0; }
-
-    if(state === "VICTORY") {
-        victoryTimer++; hero.y = GROUND_Y - hero.h; storyPartner.y = GROUND_Y - storyPartner.h;
-        let hT = W/2 - 60; let pT = W/2 + 10;
-        if(Math.abs(hero.x - hT) > 3) { hero.x += (hero.x < hT) ? 3 : -3; hero.faceRight = true; }
-        if(Math.abs(storyPartner.x - pT) > 3) storyPartner.x += (storyPartner.x < pT) ? 3 : -3;
-        if(victoryTimer > 300) winLevel();
-        return;
-    }
-
     if(state === "STORY") {
         storyTimer++;
-        if(storyTimer < 100) storyDragon.y += 5;
-        else if(storyTimer < 150) { storyPartner.x = storyDragon.x + 75; storyPartner.y = storyDragon.y + 75; }
-        else { storyDragon.y -= 4; storyPartner.x = storyDragon.x + 75; storyPartner.y = storyDragon.y + 75; }
-        if(storyTimer > 400) { state = "INTRO"; introTimer = 180; }
-        return;
+        if(storyTimer < 100) storyDragon.y += 5; else if(storyTimer < 150) { storyPartner.x = storyDragon.x+75; storyPartner.y = storyDragon.y+75; } else { storyDragon.y -= 4; storyPartner.x = storyDragon.x+75; storyPartner.y = storyDragon.y+75; }
+        if(storyTimer > 350) { state = "INTRO"; introTimer = 120; } return;
     }
-
+    if(state === "INTRO") { if(--introTimer <= 0) initLevel(); return; }
     if(state !== "PLAY") return;
-    if(keys.d) { if(!hero.crouching) { hero.crouching = true; hero.h = 75; hero.y += 75; } } 
-    else { if(hero.crouching) { hero.crouching = false; hero.y -= 75; hero.h = 150; } }
-    
-    let speed = hero.crouching ? 4 : 8; 
-    if(keys.l) { hero.vx = -speed; hero.faceRight = false; } else if(keys.r) { hero.vx = speed; hero.faceRight = true; } else hero.vx = 0;
-    if(keys.space && hero.grounded && !hero.crouching) { hero.vy = -18; hero.grounded = false; playNote(440, 0.1); }
+
+    // Hero Move
+    if(keys.d) { if(!hero.crouching) { hero.crouching = true; hero.h = 75; hero.y += 75; } } else { if(hero.crouching) { hero.crouching = false; hero.y -= 75; hero.h = 150; } }
+    let spd = hero.crouching ? 4 : 8;
+    if(keys.l) { hero.vx = -spd; hero.faceRight = false; } else if(keys.r) { hero.vx = spd; hero.faceRight = true; } else hero.vx = 0;
+    if(keys.space && hero.grounded && !hero.crouching) { hero.vy = -20; hero.grounded = false; playNote(400, 0.1); }
     hero.vy += 1.0; hero.x += hero.vx; hero.y += hero.vy;
     hero.grounded = false; platforms.forEach(p => resolveCollision(hero, p));
-    if(hero.x < 0) hero.x = 0; if(hero.x + hero.w > W) hero.x = W - hero.w;
+    if(hero.x < 0) hero.x = 0; if(hero.x > W - hero.w) hero.x = W - hero.w;
 
-    if(boss.alive) { let dist = hero.x - boss.x; boss.x += (dist > 0) ? (3 + level*0.5) : -(3 + level*0.5); }
-    if(keys.x && !hero.attacking) { hero.attacking = true; hero.atkTimer = 18; playNote(150, 0.1); }
+    // Boss & Fireballs
+    if(boss.alive) {
+        boss.x += (hero.x > boss.x) ? (3 + level) : -(3 + level);
+        boss.fireTimer++;
+        let fireRate = Math.max(40, 120 - (level * 20));
+        if(boss.fireTimer > fireRate) {
+            projectiles.push({ x: boss.x, y: boss.y + 50, vx: -(5 + level), w: 30, h: 30 });
+            boss.fireTimer = 0; playNote(100, 0.1);
+        }
+    }
+
+    projectiles.forEach((p, i) => {
+        p.x += p.vx;
+        if(rectIntersect(hero, p) && hero.iframes <= 0) { hero.hp--; hero.iframes = 60; playNote(50, 0.3); projectiles.splice(i, 1); }
+        if(p.x < -50) projectiles.splice(i, 1);
+    });
+
+    if(keys.x && !hero.attacking) { hero.attacking = true; hero.atkTimer = 18; playNote(200, 0.1); }
     if(hero.attacking && --hero.atkTimer <= 0) hero.attacking = false;
 
     if(boss.alive && rectIntersect(hero, boss)) {
-        if(hero.attacking) { boss.hp--; boss.flash = 8; playNote(200, 0.05); if(boss.hp <= 0) { boss.alive = false; playNote(60, 0.5); if(level === 4) { state = "VICTORY"; victoryTimer = 0; storyPartner.x = 650; storyPartner.y = GROUND_Y - 112; } } }
-        else if(hero.iframes <= 0) takeDamage();
+        if(hero.attacking) { boss.hp--; boss.flash = 8; if(boss.hp <= 0) boss.alive = false; }
+        else if(hero.iframes <= 0) { hero.hp--; hero.iframes = 60; if(hero.hp <= 0) location.reload(); }
     }
     if(hero.iframes > 0) hero.iframes--;
-    crystals.forEach(c => { if(!c.got && rectIntersect(hero, {x:c.x, y:c.y, w:50, h:50})) { c.got = true; heartsCollected++; playNote(880, 0.1); } });
-    if(!boss.alive && heartsCollected >= crystals.length && level !== 4) { gateOpen = true; if(rectIntersect(hero, gate)) winLevel(); }
+    crystals.forEach(c => { if(!c.got && rectIntersect(hero, {x:c.x, y:c.y, w:50, h:50})) { c.got = true; heartsCollected++; playNote(800, 0.1); } });
+    if(!boss.alive && heartsCollected >= crystals.length) { gateOpen = true; if(rectIntersect(hero, gate)) winLevel(); }
 }
-
-function takeDamage() { hero.hp--; hero.iframes = 60; playNote(80, 0.3); if(hero.hp <= 0) { level = 0; state="TITLE"; document.getElementById('modal').style.display='flex'; } }
 
 function draw() {
     ctx.clearRect(0,0,W,H); 
-    let bg = (state === "STORY") ? IMG.bg1 : IMG['bg'+(level+1)]; if(state === "VICTORY") bg = IMG.bg5; 
-    if(bg && bg.ok) ctx.drawImage(bg, 0, 0, W, H);
+    let bg = IMG['bg'+(level+1)]; if(bg && bg.ok) ctx.drawImage(bg, 0, 0, W, H);
 
-    if(state === "INTRO") {
-        ctx.fillStyle="black"; ctx.fillRect(0,0,W,H); ctx.fillStyle="#ffd700"; ctx.textAlign="center"; ctx.font="bold 40px Courier";
-        ctx.fillText(chapters[level].name, W/2, H/2); return;
-    }
-
-    // DRAW HUD
-    ctx.fillStyle = "rgba(0,0,0,0.7)"; ctx.fillRect(0, 0, W, 45);
-    ctx.fillStyle = "#ff4d4d"; ctx.font = "bold 24px Courier New"; ctx.textAlign = "left"; ctx.fillText("♥".repeat(hero.hp), 15, 30);
-    ctx.fillStyle = "#ffd700"; ctx.textAlign = "center"; ctx.fillText(chapters[level].name, W/2, 30);
-    ctx.fillStyle = "#00ffff"; ctx.textAlign = "right"; ctx.fillText("💎" + heartsCollected + "/" + crystals.length, W - 15, 30);
+    if(state === "INTRO") { ctx.fillStyle="black"; ctx.fillRect(0,0,W,H); ctx.fillStyle="white"; ctx.textAlign="center"; ctx.font="bold 40px Courier"; ctx.fillText(chapters[level].name, W/2, H/2); return; }
 
     if(state === "STORY") {
         if(IMG.hero_idle.ok) ctx.drawImage(IMG.hero_idle, hero.x, hero.y, hero.w, hero.h);
         if(IMG.partner.ok) ctx.drawImage(IMG.partner, storyPartner.x, storyPartner.y, storyPartner.w, storyPartner.h);
-        let dImg = (boss.frame === 1) ? IMG.dragon1 : IMG.dragon2; if(dImg && dImg.ok) ctx.drawImage(dImg, storyDragon.x, storyDragon.y, storyDragon.w, storyDragon.h);
-        if(storyTimer > 180) { ctx.fillStyle="white"; ctx.font="bold 24px Courier New"; ctx.textAlign="center"; ctx.strokeStyle="black"; ctx.lineWidth=5; ctx.strokeText("NO! I WILL SAVE YOU!", W/2, 100); ctx.fillText("NO! I WILL SAVE YOU!", W/2, 100); }
+        if(IMG.dragon1.ok) ctx.drawImage(IMG.dragon1, storyDragon.x, storyDragon.y, storyDragon.w, storyDragon.h);
+        if(storyTimer > 180) { ctx.fillStyle="white"; ctx.font="bold 24px Courier"; ctx.textAlign="center"; ctx.strokeText("NO! I WILL SAVE YOU!", W/2, 100); ctx.fillText("NO! I WILL SAVE YOU!", W/2, 100); }
         return;
     }
-    
-    platforms.forEach(p => { if(IMG.tile.ok) { for(let x=0; x<p.w; x+=32) ctx.drawImage(IMG.tile, (x===0?0:(x+32>=p.w?64:32)), 0, 32, 32, p.x+x, p.y, 32, p.h); } });
-    crystals.forEach(c => { if(!c.got && IMG.crystal.ok) ctx.drawImage(IMG.crystal, c.x, c.y, 50, 50); });
-    
-    if(state === "VICTORY") {
-        if(IMG.hero_idle.ok) ctx.drawImage(IMG.hero_idle, hero.x, hero.y, hero.w, hero.h);
-        if(IMG.partner.ok) ctx.drawImage(IMG.partner, storyPartner.x, storyPartner.y, storyPartner.w, storyPartner.h);
-        if(victoryTimer > 30) {
-            let cx = W/2, cy = H/2 - 75, p = Math.min(2.5, (victoryTimer - 30) / 80);
-            ctx.save(); ctx.translate(cx, cy); ctx.scale(p, p); ctx.fillStyle = "#ff0055";
-            ctx.beginPath(); ctx.moveTo(0, -15); ctx.bezierCurveTo(25, -25, 45, 10, 0, 45); ctx.bezierCurveTo(-45, 10, -25, -25, 0, -15); ctx.fill(); ctx.restore();
-        }
-    }
-    
-    if(boss.alive) {
-        if(boss.flash>0) { ctx.filter="brightness(3.0)"; boss.flash--; } 
-        let dImg=(boss.frame===1)?IMG.dragon1:IMG.dragon2;
-        if(level===4 && dImg.ok) ctx.drawImage(dImg, boss.x, boss.y, boss.w, boss.h);
-        else if(IMG.slime.ok) { ctx.filter="hue-rotate(280deg)"; ctx.drawImage(IMG.slime, boss.x, boss.y, boss.w, boss.h); }
-        ctx.filter = "none"; ctx.fillStyle="black"; ctx.fillRect(boss.x, boss.y-20, boss.w, 8); ctx.fillStyle="#f00"; ctx.fillRect(boss.x, boss.y-20, boss.w*(boss.hp/boss.maxHP), 8);
-    }
-    
-    if(gateOpen) { 
-        let cx=gate.x+gate.w/2, cy=gate.y+gate.h/2, p=1+Math.sin(Date.now()/200)*0.2; 
-        ctx.save(); ctx.translate(cx,cy); ctx.scale(p,p); ctx.fillStyle="#ff0055"; ctx.beginPath(); ctx.moveTo(0,-15); ctx.bezierCurveTo(25,-25,45,10,0,45); ctx.bezierCurveTo(-45, 10, -25, -25, 0, -15); ctx.fill(); ctx.restore(); 
-    }
-    
-    if(hero.iframes%10<5) { let s=hero.attacking?IMG.hero_atk : IMG.hero_idle; if(s.ok) { ctx.save(); if(!hero.faceRight){ ctx.translate(hero.x+hero.w, hero.y); ctx.scale(-1,1); ctx.drawImage(s,0,0,hero.w,hero.h); } else ctx.drawImage(s, hero.x, hero.y, hero.w, hero.h); ctx.restore(); } }
-    drawUI();
-}
 
-// Logic fix to draw HUD correctly
-function drawUI() {
-    // Already handled inside draw() for layering
+    // World
+    platforms.forEach(p => { if(IMG.tile.ok) { for(let x=0; x<p.w; x+=32) ctx.drawImage(IMG.tile, 32, 0, 32, 32, p.x+x, p.y, 32, 32); } });
+    crystals.forEach(c => { if(!c.got && IMG.crystal.ok) ctx.drawImage(IMG.crystal, c.x, c.y, 50, 50); });
+    projectiles.forEach(p => { ctx.fillStyle = "#ffaa00"; ctx.beginPath(); ctx.arc(p.x+15, p.y+15, 15, 0, Math.PI*2); ctx.fill(); });
+
+    if(boss.alive) {
+        if(boss.flash>0) { ctx.filter="brightness(3)"; boss.flash--; }
+        let d = level === 4 ? IMG.dragon1 : IMG.slime;
+        if(d && d.ok) ctx.drawImage(d, boss.x, boss.y, boss.w, boss.h);
+        ctx.filter="none"; ctx.fillStyle="black"; ctx.fillRect(boss.x, boss.y-15, boss.w, 10); ctx.fillStyle="red"; ctx.fillRect(boss.x, boss.y-15, boss.w*(boss.hp/boss.maxHP), 10);
+    }
+    if(gateOpen) { ctx.fillStyle="#ff0055"; ctx.beginPath(); ctx.moveTo(gate.x+50, gate.y+30); ctx.bezierCurveTo(gate.x+50, gate.y+27, gate.x+45, gate.y+15, gate.x+25, gate.y+15); ctx.bezierCurveTo(gate.x-5, gate.y+15, gate.x-5, gate.y+52.5, gate.x-5, gate.y+52.5); ctx.bezierCurveTo(gate.x-5, gate.y+70, gate.x+15, gate.y+92, gate.x+50, gate.y+110); ctx.bezierCurveTo(gate.x+85, gate.y+92, gate.x+105, gate.y+70, gate.x+105, gate.y+52.5); ctx.bezierCurveTo(gate.x+105, gate.y+52.5, gate.x+105, gate.y+15, gate.x+75, gate.y+15); ctx.bezierCurveTo(gate.x+60, gate.y+15, gate.x+50, gate.y+27, gate.x+50, gate.y+30); ctx.fill(); }
+
+    let s = hero.attacking ? IMG.hero_atk : IMG.hero_idle;
+    if(hero.iframes % 10 < 5 && s && s.ok) { 
+        ctx.save(); if(!hero.faceRight){ ctx.translate(hero.x+hero.w, hero.y); ctx.scale(-1,1); ctx.drawImage(s,0,0,hero.w,hero.h); } else ctx.drawImage(s, hero.x, hero.y, hero.w, hero.h); ctx.restore(); 
+    }
+
+    // HUD
+    ctx.fillStyle = "rgba(0,0,0,0.7)"; ctx.fillRect(0,0,W,45);
+    ctx.fillStyle = "#ff4d4d"; ctx.font = "bold 24px Courier"; ctx.textAlign = "left"; ctx.fillText("♥".repeat(hero.hp), 15, 30);
+    ctx.fillStyle = "#ffd700"; ctx.textAlign = "center"; ctx.fillText(chapters[level].name, W/2, 30);
+    ctx.fillStyle = "#00ffff"; ctx.textAlign = "right"; ctx.fillText("💎"+heartsCollected, W-15, 30);
 }
 
 function rectIntersect(r1, r2) { return !(r2.x > r1.x + r1.w || r2.x + r2.w < r1.x || r2.y > r1.y + r1.h || r2.y + r2.h < r1.y); }
 
 function winLevel() { 
-    state = "QUIZ"; document.getElementById('modal').style.display='flex';
-    document.getElementById('modal-content').innerHTML = `
-        <h2 style="color:#ffd700">LEVEL CLEAR</h2>
-        <p style="font-size:16px">${chapters[level].quiz}</p>
-        <input type="text" id="ans" placeholder="Tap to type..." autocomplete="off">
-        <br><button onclick="checkAnswer()">UNLOCK MEMORY</button>
-    `;
-    setTimeout(() => { let i = document.getElementById('ans'); if(i) { i.focus(); i.click(); } }, 200);
+    state="QUIZ"; document.getElementById('modal').style.display='flex'; 
+    document.getElementById('modal-content').innerHTML = `<h2>LEVEL CLEAR</h2><p>${chapters[level].quiz}</p><input id="ans" placeholder="Type answer..."><button onclick="checkAnswer()">UNLOCK</button>`;
+    setTimeout(() => { let i = document.getElementById('ans'); i.focus(); i.click(); }, 200);
 }
 
-function checkAnswer() { let v = document.getElementById('ans').value.toLowerCase().trim(); if(level>=3 || chapters[level].ans.includes(v)) showPhoto(); else document.getElementById('ans').style.borderColor="red"; }
+function checkAnswer() { if(chapters[level].ans.includes(document.getElementById('ans').value.toLowerCase().trim())) showPhoto(); else document.getElementById('ans').style.borderColor="red"; }
 
 function showPhoto() { 
     let isEnd = (level === 4), html = "";
-    if(isEnd) html = `<h2>THE KINGDOM IS YOURS</h2><img src="assets/photos/photo5.jpg"><p class="caption">Jesse… this is the part where the hero wins the kingdom.<br><br>But the truth is, you already did<br>You chose us.<br><br>I love you. Happy Valentine’s Day 💖</p><button onclick="location.reload()">REPLAY</button>`;
-    else html = `<h2>MEMORY UNLOCKED</h2><img src="assets/photos/photo${level+1}.jpg"><p class="caption">${chapters[level].cap}</p><button onclick="level++; introTimer=180; state='INTRO'; document.getElementById('modal').style.display='none';">NEXT</button>`;
+    if(isEnd) html = `<h2>VICTORY!</h2><img src="assets/photos/photo5.jpg"><p>You did it, Jesse! Happy Valentine's Day! 💖</p><button onclick="location.reload()">PLAY AGAIN</button>`;
+    else html = `<h2>MEMORY UNLOCKED</h2><img src="assets/photos/photo${level+1}.jpg"><p>${chapters[level].cap}</p><button onclick="level++; state='INTRO'; introTimer=120; document.getElementById('modal').style.display='none';">NEXT LEVEL</button>`;
     document.getElementById('modal-content').innerHTML = html; 
 }
+
 function loop() { update(); draw(); requestAnimationFrame(loop); }
 loop();
 </script>
 </body>
 </html>
+
